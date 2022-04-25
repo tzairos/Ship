@@ -1,0 +1,51 @@
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #E01A76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+input[type="text"] {
+  font-size: 18px;
+  height: 34px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #666;
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  background: white;
+  outline: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: block;
+}
+label {
+  color:#000000;
+  font-size: 17px;
+  font-weight: 500;
+}
+.ship-form {
+  flex: 1;
+  max-width: 600px;
+  border-radius: 10px;
+  background-color: #EFF0F1;
+  border: 1px solid #999;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.btn {
+  padding:10px 20px;
+  background-color: #1BBA93;
+  font-size:17px;
+  border:none;
+  border-radius:5px;
+  color:#bcf5e7;
+  cursor:pointer;
+}
