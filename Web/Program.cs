@@ -6,19 +6,20 @@ using ApplicationCore.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json.Serialization;
 using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews(opt=>{
-    opt.AllowEmptyInputInBodyModelBinding=true;
-}).AddNewtonsoftJson(opt=>{
-    opt.SerializerSettings.NullValueHandling=Newtonsoft.Json.NullValueHandling.Include;
-    opt.SerializerSettings.DefaultValueHandling=Newtonsoft.Json.DefaultValueHandling.IgnoreAndPopulate;
-    opt.SerializerSettings.ContractResolver= new CamelCasePropertyNamesContractResolver();
+builder.Services.AddControllersWithViews(opt =>
+{
+    opt.AllowEmptyInputInBodyModelBinding = true;
+}).AddNewtonsoftJson(opt =>
+{
+    opt.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Include;
+    opt.SerializerSettings.DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.IgnoreAndPopulate;
+    opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 });
 var assembly = Assembly.GetExecutingAssembly();
 builder.Services.AddApplicationCoreServices();
@@ -26,18 +27,19 @@ builder.Services.AddMediatR(assembly);
 
 builder.Services.AddValidatorsFromAssembly(assembly);
 builder.Services.AddAutoMapper(assembly);
-builder.Services.Configure<ApiBehaviorOptions>(options =>{
-            
-              options.InvalidModelStateResponseFactory = actionContext =>
-                {
-                    var validationErrors = actionContext.ModelState.Keys
-                        .SelectMany(key => actionContext.ModelState[key].Errors.Select(x => new ValidationError
-                            { Field = key, Message = x.ErrorMessage })).ToList();
-            var formattedErrors=(validationErrors.Select(x=>$"{x.Field}:{x.Message}").ToList());   
-                   
-                    throw new ApplicationException(String.Join("\n",formattedErrors ),ErrorType.ValdiationError);
-                };
-            
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+
+    options.InvalidModelStateResponseFactory = actionContext =>
+      {
+          var validationErrors = actionContext.ModelState.Keys
+              .SelectMany(key => actionContext.ModelState[key].Errors.Select(x => new ValidationError
+              { Field = key, Message = x.ErrorMessage })).ToList();
+          var formattedErrors = (validationErrors.Select(x => $"{x.Field}:{x.Message}").ToList());
+
+          throw new ApplicationException(String.Join("\n", formattedErrors), ErrorType.ValdiationError);
+      };
+
 });
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 var connectionString =

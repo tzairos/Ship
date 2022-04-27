@@ -2,9 +2,9 @@ using ApplicationCore.Entities.ShipAggreate;
 using ApplicationCore.Entities.UserAggreate;
 using AutoMapper;
 
-public class UserProfile : Profile
+public class MappingProfile : Profile
 {
-	public UserProfile()
+	public MappingProfile()
 	{
 		CreateMap<UserDTO, User>().ReverseMap();
 		CreateMap<ShipDTO, Ship>().ReverseMap();
